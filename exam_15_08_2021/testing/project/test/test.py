@@ -7,7 +7,7 @@ class PetShopTest(unittest.TestCase):
     PET_SHOP_NAME = "Test Shop"
     PET_FOOD_NAME = "Test Food"
     PET_NAME = "Test Pet"
-    ANOTHER_PET_NAME = "Another Pet"
+    SECOND_PET_NAME = "Another Pet"
 
     def setUp(self) -> None:
         self.pet_shop = PetShop(self.PET_SHOP_NAME)
@@ -109,10 +109,10 @@ class PetShopTest(unittest.TestCase):
         self.assertEqual(expected, result)
 
     def test_repr__when_two_pets(self):
-        self.pet_shop.pets = [self.PET_NAME, self.ANOTHER_PET_NAME]
+        self.pet_shop.pets = [self.PET_NAME, self.SECOND_PET_NAME]
 
         expected = f'Shop {self.PET_SHOP_NAME}:\n' \
-                   f'Pets: {self.PET_NAME}, {self.ANOTHER_PET_NAME}'
+                   f'Pets: {self.PET_NAME}, {self.SECOND_PET_NAME}'
         result = repr(self.pet_shop)
 
         self.assertEqual(expected, result)
