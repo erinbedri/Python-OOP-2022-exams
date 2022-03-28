@@ -114,7 +114,7 @@ class SpaceStation:
         report += "Astronauts' info:\n"
 
         for astronaut in self.astronaut_repository.astronauts:
-            report += f"Name: {astronaut.name}\n"
+            report += f"Name: {astronaut.family_name}\n"
             report += f"Oxygen: {astronaut.oxygen}\n"
             if astronaut.backpack:
                 report += f"Backpack items: {', '.join([item for item in astronaut.backpack])}\n"

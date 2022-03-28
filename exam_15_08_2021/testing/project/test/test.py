@@ -13,7 +13,7 @@ class PetShopTest(unittest.TestCase):
         self.pet_shop = PetShop(self.PET_SHOP_NAME)
 
     def test_init(self):
-        self.assertEqual(self.PET_SHOP_NAME, self.pet_shop.name)
+        self.assertEqual(self.PET_SHOP_NAME, self.pet_shop.family_name)
         self.assertDictEqual({}, self.pet_shop.food)
         self.assertListEqual([], self.pet_shop.pets)
 

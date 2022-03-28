@@ -8,7 +8,7 @@ class TrainTests(unittest.TestCase):
         self.train = Train("Test Train", 100)
 
     def test_init(self):
-        self.assertEqual("Test Train", self.train.name)
+        self.assertEqual("Test Train", self.train.family_name)
         self.assertEqual(100, self.train.capacity)
         self.assertEqual([], self.train.passengers)
 

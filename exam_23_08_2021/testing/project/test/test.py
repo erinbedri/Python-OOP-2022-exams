@@ -8,18 +8,18 @@ class LibraryTests(unittest.TestCase):
         self.library = Library("Test")
 
     def test_init(self):
-        self.assertEqual("Test", self.library.name)
+        self.assertEqual("Test", self.library.family_name)
         self.assertEqual({}, self.library.books_by_authors)
         self.assertEqual({}, self.library.readers)
 
     def test_name_setter__when_empty_string__expect_value_error(self):
         with self.assertRaises(ValueError) as context:
-            self.library.name = ""
+            self.library.family_name = ""
         self.assertEqual("Name cannot be empty string!", str(context.exception))
 
     def test_name_setter__when_valid(self):
-        self.library.name = "new name"
-        self.assertEqual("new name", self.library.name)
+        self.library.family_name = "new name"
+        self.assertEqual("new name", self.library.family_name)
 
     def test_add_book__when_author_not_in_dict__expect_empty_dict(self):
         self.library.add_book("Vazov", "Pod igoto")

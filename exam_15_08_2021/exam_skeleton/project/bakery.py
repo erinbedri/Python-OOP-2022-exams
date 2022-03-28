@@ -32,26 +32,26 @@ class Bakery:
 
     def add_food(self, food_type: str, name: str, price: float):
         for food in self.food_menu:
-            if food.name == name:
+            if food.family_name == name:
                 raise Exception(f"{food_type} {name} is already in the menu!")
 
         food = self.__create_food(food_type, name, price)
 
         if food:
             self.food_menu.append(food)
-            self.food.add(food.name)
+            self.food.add(food.family_name)
             return f"Added {name} ({food_type}) to the food menu"
 
     def add_drink(self, drink_type: str, name: str, portion: float, brand: str):
         for drink in self.drinks_menu:
-            if drink.name == name:
+            if drink.family_name == name:
                 raise Exception(f"{drink_type} {name} is already in the menu!")
 
         drink = self.__create_drink(drink_type, name, portion, brand)
 
         if drink:
             self.drinks_menu.append(drink)
-            self.drinks.add(drink.name)
+            self.drinks.add(drink.family_name)
             return f"Added {name} ({brand}) to the drink menu"
 
     def add_table(self, table_type: str, table_number: int, capacity: int):
@@ -162,9 +162,9 @@ class Bakery:
                 return table
 
     def __get_food_by_name(self, food_name):
-        foods = [f for f in self.food_menu if f.name == food_name]
+        foods = [f for f in self.food_menu if f.family_name == food_name]
         return foods[0] if foods else None
 
     def __get_drink_by_name(self, drink_name):
-        drinks = [d for d in self.drinks_menu if d.name == drink_name]
+        drinks = [d for d in self.drinks_menu if d.family_name == drink_name]
         return drinks[0] if drinks else None

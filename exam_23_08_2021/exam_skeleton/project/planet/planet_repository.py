@@ -12,7 +12,7 @@ class PlanetRepository:
         self.planets.remove(planet)
 
     def find_by_name(self, name):
-        planet = [planet for planet in self.planets if planet.name == name]
+        planet = [planet for planet in self.planets if planet.family_name == name]
         if planet:
             return planet[0]
 
