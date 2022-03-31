@@ -81,9 +81,8 @@ class Controller:
         if not driver.car:
             raise Exception(f"Driver {driver_name} could not participate in the race!")
 
-        for d in race.drivers:
-            if d == driver:
-                raise Exception(f"Driver {driver_name} is already added in {race_name} race.")
+        if driver in race.drivers:
+            raise Exception(f"Driver {driver_name} is already added in {race_name} race.")
 
         race.drivers.append(driver)
         return f"Driver {driver_name} added in {race_name} race."
@@ -98,12 +97,12 @@ class Controller:
             raise Exception(f"Race {race_name} cannot start with less than 3 participants!")
 
         fastest_cars = sorted([(driver, driver.car.speed_limit) for driver in race.drivers],
-                                   key=lambda kwp: -kwp[1])[:3]
+                                   key=lambda kwp: -kwp[1])
 
         result = ""
-        for driver in fastest_cars:
-            driver[0].number_of_wins += 1
-            result += f"Driver {driver[0].name} wins the {race_name} race with a speed of {driver[1]}.\n"
+        for driver, speed in fastest_cars[:3]:
+            driver.number_of_wins += 1
+            result += f"Driver {driver.name} wins the {race_name} race with a speed of {speed}.\n"
 
         return result.strip()
 
