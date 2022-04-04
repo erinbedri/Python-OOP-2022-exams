@@ -15,4 +15,4 @@ class Race:
     @staticmethod
     def __name_is_empty_or_whitespace(value):
         if not value or not value.strip():
-            raise ValueError(f"Name cannot be an empty string!")
+            raise ValueError("Name cannot be an empty string!")

@@ -1,5 +1,4 @@
-from project.car.muscle_car import MuscleCar
-from project.car.sports_car import SportsCar
+from project.core.car_factory import CarFactory
 from project.driver import Driver
 from project.race import Race
 
@@ -10,16 +9,20 @@ class Controller:
         self.drivers = []
         self.races = []
 
+        self.car_factory = CarFactory()
+
     def create_car(self, car_type: str, model: str, speed_limit: int):
         for car in self.cars:
             if car.model == model:
                 raise Exception(f"Car {model} is already created!")
 
-        car = self.__create_car_by_type(car_type, model, speed_limit)
-
-        if car:
+        try:
+            car = self.car_factory.create_car(car_type, model, speed_limit)
             self.cars.append(car)
             return f"{car_type} {model} is created."
+
+        except RuntimeError:
+            pass
 
     def create_driver(self, driver_name: str):
         for driver in self.drivers:
@@ -28,9 +31,8 @@ class Controller:
 
         driver = self.__create_drive_by_name(driver_name)
 
-        if driver:
-            self.drivers.append(driver)
-            return f"Driver {driver_name} is created."
+        self.drivers.append(driver)
+        return f"Driver {driver_name} is created."
 
     def create_race(self, race_name: str):
         for race in self.races:
@@ -39,9 +41,8 @@ class Controller:
 
         race = self.__create_race_by_name(race_name)
 
-        if race:
-            self.races.append(race)
-            return f"Race {race_name} is created."
+        self.races.append(race)
+        return f"Race {race_name} is created."
 
     def add_car_to_driver(self, driver_name: str, car_type: str):
         driver = self.__get_driver_by_name(driver_name)
@@ -105,13 +106,6 @@ class Controller:
             result += f"Driver {driver.name} wins the {race_name} race with a speed of {speed}.\n"
 
         return result.strip()
-
-    @staticmethod
-    def __create_car_by_type(car_type, model, speed_limit):
-        if car_type == MuscleCar.__name__:
-            return MuscleCar(model, speed_limit)
-        elif car_type == SportsCar.__name__:
-            return SportsCar(model, speed_limit)
 
     @staticmethod
     def __create_drive_by_name(driver_name):
