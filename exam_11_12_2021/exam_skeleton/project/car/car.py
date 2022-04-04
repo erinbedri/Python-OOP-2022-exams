@@ -19,7 +19,7 @@ class Car(ABC):
 
     @property
     def speed_limit(self):
-        return self.__speed_limit.limit
+        return self.__speed_limit
 
     @speed_limit.setter
     def speed_limit(self, value):

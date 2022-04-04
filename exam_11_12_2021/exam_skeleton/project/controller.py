@@ -47,52 +47,26 @@ class Controller:
     def add_car_to_driver(self, driver_name: str, car_type: str):
         driver = self.__get_driver_by_name(driver_name)
 
-        if not driver:
-            raise Exception(f"Driver {driver_name} could not be found!")
+        car = self.__get_last_free_car_by_type(car_type)
 
-        cars = self.__get_non_taken_cars_by_type(car_type)
-
-        if len(cars) == 0:
-            raise Exception(f"Car {car_type} could not be found!")
-        else:
-            car = cars[-1]
-
-        if driver.car:
-            old_car = driver.car
-            old_car.is_taken = False
-            driver.car = car
-            car.is_taken = True
-            return f"Driver {driver_name} changed his car from {old_car.model} to {car.model}."
-
-        car.is_taken = True
-        driver.car = car
-        return f"Driver {driver_name} chose the car {car.model}."
+        return driver.change_car(car)
 
     def add_driver_to_race(self, race_name: str, driver_name: str):
         race = self.__get_race_by_name(race_name)
 
-        if not race:
-            raise Exception(f"Race {race_name} could not be found!")
-
         driver = self.__get_driver_by_name(driver_name)
-
-        if not driver:
-            raise Exception(f"Driver {driver_name} could not be found!")
 
         if not driver.car:
             raise Exception(f"Driver {driver_name} could not participate in the race!")
 
         if driver in race.drivers:
-            raise Exception(f"Driver {driver_name} is already added in {race_name} race.")
+            return f"Driver {driver_name} is already added in {race_name} race."
 
         race.drivers.append(driver)
         return f"Driver {driver_name} added in {race_name} race."
 
     def start_race(self, race_name: str):
         race = self.__get_race_by_name(race_name)
-
-        if not race:
-            raise Exception(f"Race {race_name} could not be found!")
 
         if len(race.drivers) < 3:
             raise Exception(f"Race {race_name} cannot start with less than 3 participants!")
@@ -115,19 +89,25 @@ class Controller:
     def __create_race_by_name(race_name):
         return Race(race_name)
 
-    def __get_non_taken_cars_by_type(self, car_type):
-        cars = []
-        for car in self.cars:
-            if car.type == car_type and not car.is_taken:
-                cars.append(car)
-        return cars
+    def __get_last_free_car_by_type(self, car_type):
+        for idx in range(len(self.cars) - 1, -1, -1):
+            car = self.cars[idx]
+
+            if not car.is_taken and car.__class__.__name__ == car_type:
+                return car
+
+        raise Exception(f'Car {car_type} could not be found!')
 
     def __get_driver_by_name(self, driver_name):
         for driver in self.drivers:
             if driver.name == driver_name:
                 return driver
 
+        raise Exception(f'Driver {driver_name} could not be found!')
+
     def __get_race_by_name(self, race_name):
         for race in self.races:
             if race.name == race_name:
                 return race
+
+        raise Exception(f'Race {race_name} could not be found!')

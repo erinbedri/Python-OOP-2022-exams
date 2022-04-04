@@ -1,3 +1,6 @@
+from project.car.car import Car
+
+
 class Driver:
     def __init__(self, name):
         self.name = name
@@ -17,3 +20,14 @@ class Driver:
     def __name_is_empty_or_whitespace(value):
         if not value or not value.strip():
             raise ValueError(f"Name should contain at least one character!")
+
+    def change_car(self, car: Car):
+        car.is_taken = True
+        if self.car is None:
+            self.car = car
+            return f'Driver {self.name} chose the car {car.model}.'
+
+        self.car.is_taken = False
+        old_model = self.car.model
+        self.car = car
+        return f'Driver {self.name} changed his car from {old_model} to {car.model}.'
