@@ -28,36 +28,45 @@ class TestTeam(unittest.TestCase):
             self.team.name = self.INVALID_TEAM_NAME
         self.assertEqual(self.ERROR_MESSAGE_INVALID_NAME, str(context.exception))
 
-    def test_add_member__when_no_member(self):
-        expected = "Successfully added: "
-        result = self.team.add_member()
+    def test_add_members_adds_only_new_members(self):
+        self.team.members["Erin"] = 28
 
-        self.assertEqual({}, self.team.members)
-        self.assertEqual(expected, result)
+        result = self.team.add_member(Erin=28, Emre=18, Irena=28)
 
-    def test_add_member__when_member_exists(self):
-        self.team.members = {"Erin": 28}
+        self.assertEqual("Successfully added: Emre, Irena", result)
+        self.assertEqual(18, self.team.members["Emre"])
+        self.assertEqual(28, self.team.members["Irena"])
 
-        expected = "Successfully added: "
-        result = self.team.add_member(Erin=28)
-
-        self.assertEqual({"Erin": 28}, self.team.members)
-        self.assertEqual(expected, result)
-
-    def test_add_member__when_single_member(self):
-        expected = "Successfully added: Erin"
-        result = self.team.add_member(Erin=28)
-
-        self.assertEqual({'Erin': 28}, self.team.members)
-        self.assertEqual(expected, result)
-
-    def test_add_member__when_multiple_members(self):
-        expected = "Successfully added: Erin, Sanjeev"
-        result = self.team.add_member(Erin=28, Sanjeev=27)
-
-        self.assertEqual(28, self.team.members["Erin"])
-        self.assertEqual(27, self.team.members["Sanjeev"])
-        self.assertEqual(expected, result)
+    # def test_add_member__when_no_member(self):
+    #     expected = "Successfully added: "
+    #     result = self.team.add_member()
+    #
+    #     self.assertEqual({}, self.team.members)
+    #     self.assertEqual(expected, result)
+    #
+    # def test_add_member__when_member_exists(self):
+    #     self.team.members = {"Erin": 28}
+    #
+    #     expected = "Successfully added: "
+    #     result = self.team.add_member(Erin=28)
+    #
+    #     self.assertEqual({"Erin": 28}, self.team.members)
+    #     self.assertEqual(expected, result)
+    #
+    # def test_add_member__when_single_member(self):
+    #     expected = "Successfully added: Erin"
+    #     result = self.team.add_member(Erin=28)
+    #
+    #     self.assertEqual({'Erin': 28}, self.team.members)
+    #     self.assertEqual(expected, result)
+    #
+    # def test_add_member__when_multiple_members(self):
+    #     expected = "Successfully added: Erin, Sanjeev"
+    #     result = self.team.add_member(Erin=28, Sanjeev=27)
+    #
+    #     self.assertEqual(28, self.team.members["Erin"])
+    #     self.assertEqual(27, self.team.members["Sanjeev"])
+    #     self.assertEqual(expected, result)
 
     def test_remove_member__when_user_not_member(self):
         expected = "Member with name Erin does not exist"
