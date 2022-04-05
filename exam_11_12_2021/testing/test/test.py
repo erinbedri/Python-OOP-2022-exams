@@ -55,7 +55,8 @@ class TestTeam(unittest.TestCase):
         expected = "Successfully added: Erin, Sanjeev"
         result = self.team.add_member(Erin=28, Sanjeev=27)
 
-        self.assertEqual({'Erin': 28, 'Sanjeev': 27}, self.team.members)
+        self.assertEqual(28, self.team.members["Erin"])
+        self.assertEqual(27, self.team.members["Sanjeev"])
         self.assertEqual(expected, result)
 
     def test_remove_member__when_user_not_member(self):
